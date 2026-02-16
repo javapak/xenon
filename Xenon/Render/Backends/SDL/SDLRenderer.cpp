@@ -30,6 +30,13 @@ void SDLRenderer::BackendSDLProperties(SDL_PropertiesID properties) {
 
 void SDLRenderer::BackendSDLInit() {
   LOG_INFO(Render, "SDLRenderer::BackendSDLInit");
+  device = SDL_CreateGPUDevice(SDL_GPU_SHADERFORMAT_SPIRV, true, nullptr)
+  if (!device) {
+      LOG_ERROR(Render, "Failed to create SDL_GPU device: {}", SDL_GetError());
+      return;
+  }
+  LOG_INFO(Render, "SDL GPU Device created successfully!")
+  
 }
 
 void SDLRenderer::BackendShutdown() {
