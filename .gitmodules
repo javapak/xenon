@@ -50,3 +50,6 @@
 [submodule "Deps/ThirdParty/plusaes"]
 	path = Deps/ThirdParty/plusaes
 	url = https://github.com/kkAyataka/plusaes.git
+[submodule "XenosRecomp"]
+	path = XenosRecomp
+	url = https://github.com/hedge-dev/XenosRecomp
