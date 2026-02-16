@@ -102,6 +102,7 @@ macro(xenon_dep pkg target subdir)
       find_package(${pkg} QUIET)
     endif()
 
+
     if (TARGET ${target})
       # Check for library or header-only target
       get_target_property(lib_location ${target} IMPORTED_LOCATION)
@@ -118,6 +119,11 @@ macro(xenon_dep pkg target subdir)
       elseif (type STREQUAL "INTERFACE_LIBRARY")
         message(STATUS "Using system ${pkg} (header-only)")
         set(found_system ON)
+      elseif (${pkg} STREQUAL "fmt")
+        set(FMT_INSTALL OFF CACHE BOOL "" FORCE)
+        set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+      elseif (${pkg} STREQUAL "sirit")
+        set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
       else()
         message(WARNING "System ${pkg} found but unusable - falling back to bundled")
       endif()
@@ -169,11 +175,14 @@ xenon_dep(toml11 toml11::toml11 toml11)
 if (GFX_ENABLED)
   xenon_dep(glad glad glad)
   xenon_dep(SDL3 SDL3::SDL3 SDL3)
+  set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
   xenon_dep(sirit sirit Sirit)
+  set(BUILD_SHARED_LIBS ON CACHE BOOL "" FORCE)  # Reset for other deps
   xenon_dep(VulkanHeaders Vulkan::Headers Vulkan-Headers)
   xenon_dep(VulkanMemoryAllocator VulkanMemoryAllocator VulkanMemoryAllocator)
   xenon_dep(vk-bootstrap vk-bootstrap::vk-bootstrap vk-bootstrap)
   xenon_dep(glslang glslang glslang)
+  xenon_dep(XenosRecomp XenosRecomp XenosRecomp)
 endif()
 
 # Include Files
@@ -215,7 +224,7 @@ add_executable(Xenon
   ${include}
   ${microprofile}
   Xenon/Main.cpp
-)
+ "Xenon/Render/WebGPU/WebGPUBuffer.cpp" "Xenon/Render/WebGPU/WebGPUShader.cpp")
 
 target_precompile_headers(Xenon PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Xenon/Base/Global.h)
 
