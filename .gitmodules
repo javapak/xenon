@@ -53,3 +53,6 @@
 [submodule "XenosRecomp"]
 	path = XenosRecomp
 	url = https://github.com/hedge-dev/XenosRecomp
+[submodule "Deps/ThirdParty/XenosRecomp"]
+	path = Deps/ThirdParty/XenosRecomp
+	url = https://github.com/hedge-dev/XenosRecomp
