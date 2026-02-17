@@ -36,6 +36,12 @@ void SDLRenderer::BackendSDLInit() {
         LOG_ERROR(Render, "Failed to create SDL_GPU device: {}", SDL_GetError());
         return;
     }
+
+    if (!SDL_ClaimWindowForGPUDevice(device, mainWindow)) {
+        LOG_ERROR(Render, "Failed to claim window for GPU device: {}", SDL_GetError());
+        return;
+    }
+
     LOG_INFO(Render, "SDL GPU Device created successfully!");
 
 }
