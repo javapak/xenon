@@ -4,7 +4,7 @@
 
 #include "SDLShaderFactory.h"
 
-#include "Render/SDL/SDLShader.h"
+#include "Render/SDL_GPU/SDLShader.h"
 
 #ifndef NO_GFX
 namespace Render {

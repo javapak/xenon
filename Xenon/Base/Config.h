@@ -61,7 +61,7 @@ inline struct _rendering {
   // GPU ID Selection (Only for Vulkan/DirectX)
   s32 gpuId = -1;
   // Backend selection
-  std::string backend = "OpenGL";
+  std::string backend = "SDL";
   // Debug validation
   bool debugValidation = false;
 

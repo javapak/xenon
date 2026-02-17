@@ -52,7 +52,7 @@ void _rendering::to_toml(toml::value &value) {
   value["GPU"].comments().push_back("# Chooses which GPU to use if there are multiple (Vulkan/DirectX only)");
   value["Backend"].comments().clear();
   value["Backend"] = backend;
-  value["Backend"].comments().push_back("# Graphics API used for rendering (OpenGL, Vulkan & Dummy)");
+  value["Backend"].comments().push_back("# Graphics API used for rendering (OpenGL, SDL_GPU, Vulkan & Dummy)");
   value["DebugValidation"].comments().clear();
   value["DebugValidation"] = debugValidation;
   value["DebugValidation"].comments().push_back("# Graphics API Validation");

@@ -5,9 +5,9 @@
 #pragma once
 
 #include "Render/Abstractions/Factory/ResourceFactory.h"
-#include "Render/SDL/Factory/SDLShaderFactory.h"
-#include "Render/SDL/SDLBuffer.h"
-#include "Render/SDL/SDLTexture.h"
+#include "Render/SDL_GPU/Factory/SDLShaderFactory.h"
+#include "Render/SDL_GPU/SDLBuffer.h"
+#include "Render/SDL_GPU/SDLTexture.h"
 #include "Render/GUI/SDL.h"
 
 #include "Base/Logging/Log.h"

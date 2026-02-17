@@ -119,9 +119,11 @@ macro(xenon_dep pkg target subdir)
       elseif (type STREQUAL "INTERFACE_LIBRARY")
         message(STATUS "Using system ${pkg} (header-only)")
         set(found_system ON)
-      elseif (${pkg} STREQUAL "fmt")
-        set(FMT_INSTALL OFF CACHE BOOL "" FORCE)
         set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+      elseif (${pkg} STREQUAL "glslang")
+        set(ENABLE_OPT OFF CACHE BOOL "" FORCE)
+        set(BUILD_EXTERNAL OFF CACHE BOOL "" FORCE)
+        set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)  
       elseif (${pkg} STREQUAL "sirit")
         set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
       else()
@@ -137,7 +139,10 @@ macro(xenon_dep pkg target subdir)
 
     if (NOT TARGET ${target})
       # Per-dep settings
-      if (${pkg} STREQUAL "toml11")
+      if (${pkg} STREQUAL "fmt")
+        set(FMT_INSTALL OFF CACHE BOOL "" FORCE)
+        set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+      elseif (${pkg} STREQUAL "toml11")
         set(TOML11_INSTALL OFF CACHE BOOL "" FORCE)
       elseif (${pkg} STREQUAL "SDL3")
         set(SDL_DISKAUDIO OFF CACHE BOOL "" FORCE)
@@ -177,10 +182,11 @@ if (GFX_ENABLED)
   xenon_dep(SDL3 SDL3::SDL3 SDL3)
   set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
   xenon_dep(sirit sirit Sirit)
-  set(BUILD_SHARED_LIBS ON CACHE BOOL "" FORCE)  # Reset for other deps
+  set(BUILD_SHARED_LIBS ON CACHE BOOL "" FORCE)  
   xenon_dep(VulkanHeaders Vulkan::Headers Vulkan-Headers)
   xenon_dep(VulkanMemoryAllocator VulkanMemoryAllocator VulkanMemoryAllocator)
   xenon_dep(vk-bootstrap vk-bootstrap::vk-bootstrap vk-bootstrap)
+  set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
   xenon_dep(glslang glslang glslang)
   xenon_dep(XenosRecomp XenosRecomp XenosRecomp)
 endif()
@@ -200,7 +206,8 @@ if (GFX_ENABLED)
     ${ImGuiDir}/backends/imgui_impl_vulkan.cpp
     ${ImGuiDir}/backends/imgui_impl_vulkan.h
     ${ImGuiDir}/backends/imgui_impl_sdl3.cpp
-    ${ImGuiDir}/backends/imgui_impl_sdl3.h
+    ${ImGuiDir}/backends/imgui_impl_sdlgpu3.cpp  
+    ${ImGuiDir}/backends/imgui_impl_sdlgpu3.h    
   )
   file(GLOB ImGui ${ImGuiDir}/*.cpp ${ImGuiDir}/*.h)
   file(GLOB_RECURSE XenonRender Xenon/Render/*.cpp Xenon/Render/*.h)
@@ -224,7 +231,7 @@ add_executable(Xenon
   ${include}
   ${microprofile}
   Xenon/Main.cpp
- "Xenon/Render/WebGPU/WebGPUBuffer.cpp" "Xenon/Render/WebGPU/WebGPUShader.cpp")
+ "Xenon/Render/GUI/SDL.h" "Xenon/Render/GUI/SDL.cpp")
 
 target_precompile_headers(Xenon PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Xenon/Base/Global.h)
 

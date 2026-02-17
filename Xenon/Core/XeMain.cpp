@@ -5,6 +5,7 @@
 #include "XeMain.h"
 
 #include "Render/Backends/Vulkan/VulkanRenderer.h"
+#include "Render/Backends/SDL/SDLRenderer.h"
 
 void XeMain::Create() {
   MICROPROFILE_SCOPEI("[Xe::Main]", "Create", MP_AUTO);
@@ -26,8 +27,12 @@ void XeMain::Create() {
   case "Dummy"_jLower:
     renderer = std::make_unique<Render::DummyRenderer>();
     break;
+  case "SDL"_jLower:
+    renderer = std::make_unique<Render::SDLRenderer>();
+    break;
+
   default:
-    LOG_ERROR(Render, "Invalid renderer backend: {}", Config::rendering.backend);
+    LOG_ERROR(Render, "Why tho? Invalid renderer backend: {}", Config::rendering.backend);
     break;
   }
 #endif

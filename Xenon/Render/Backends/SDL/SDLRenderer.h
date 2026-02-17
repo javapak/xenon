@@ -14,7 +14,7 @@ namespace Render {
 
 class SDLRenderer : public Renderer {
 private:
-  SDL_GPUDevice* device = nullptr
+	SDL_GPUDevice* device = nullptr;
 public:
   void BackendSDLProperties(SDL_PropertiesID properties) override;
   void BackendStart() override;

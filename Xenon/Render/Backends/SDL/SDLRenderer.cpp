@@ -4,7 +4,7 @@
 
 #include "Render/Backends/SDL/SDLRenderer.h"
 
-#include "Render/SDL/Factory/SDLResourceFactory.h"
+#include "Render/SDL_GPU/Factory/SDLResourceFactory.h"
 
 #ifndef NO_GFX
 namespace Render {
@@ -29,14 +29,15 @@ void SDLRenderer::BackendSDLProperties(SDL_PropertiesID properties) {
 }
 
 void SDLRenderer::BackendSDLInit() {
-  LOG_INFO(Render, "SDLRenderer::BackendSDLInit");
-  device = SDL_CreateGPUDevice(SDL_GPU_SHADERFORMAT_SPIRV, true, nullptr)
-  if (!device) {
-      LOG_ERROR(Render, "Failed to create SDL_GPU device: {}", SDL_GetError());
-      return;
-  }
-  LOG_INFO(Render, "SDL GPU Device created successfully!")
-  
+    LOG_INFO(Render, "SDLRenderer::BackendSDLInit");
+    device = SDL_CreateGPUDevice(SDL_GPU_SHADERFORMAT_SPIRV, true, nullptr);
+
+    if (!device) {
+        LOG_ERROR(Render, "Failed to create SDL_GPU device: {}", SDL_GetError());
+        return;
+    }
+    LOG_INFO(Render, "SDL GPU Device created successfully!");
+
 }
 
 void SDLRenderer::BackendShutdown() {
@@ -121,7 +122,7 @@ s32 SDLRenderer::GetXenosFlags() {
 
 void* SDLRenderer::GetBackendContext() {
   LOG_INFO(Render, "SDLRenderer::GetBackendContext");
-  return nullptr;
+  return static_cast<void*>(device);
 }
 
 u32 SDLRenderer::GetBackendID() {

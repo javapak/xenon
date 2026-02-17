@@ -29,6 +29,7 @@
 #include "Core/XGPU/XGPU.h"
 
 #include "Render/Backends/OGL/OGLRenderer.h"
+#include "Render/Backends/SDL/SDLRenderer.h"
 #include "Render/Backends/Dummy/DummyRenderer.h"
 
 // Global thread state

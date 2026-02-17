@@ -4,14 +4,14 @@
 
 #pragma once
 
-
+#include "Render/Abstractions/Texture.h"
 #include "Base/Types.h"
 #include "Base/Logging/Log.h"
 
 #ifndef NO_GFX
 namespace Render {
 
-class WebGPUTexture : public Texture {
+class SDLTexture : public Texture {
 public:
   void CreateTextureHandle(u32 width, u32 height, s32 flags) override;
   void CreateTextureWithData(u32 width, u32 height, eDataFormat format, u8* data, u32 dataSize, s32 flags) override;
